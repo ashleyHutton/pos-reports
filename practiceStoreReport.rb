@@ -13,9 +13,11 @@ Prawn::Document::generate("generatedPracticeStoreReport.pdf") do
 		# elements of checkbox questions including answer and box
 		subTable = [ 
 					#["Box1", "Possible checkbox answer 1."],
+					# specifying the width here make all columns this width -- why?
 					[{:content => "1", :width => 25}, {:content => "answer", :overflow => :shrink_to_fit}],
 					#["Box2", "Possible checkbox answer 2."],
 					["1", "answer"],
+					# throwing an error even though we are wrapping text -- why?
 					#["1", {:content => "Possible checkbox answer 3. This answer is really loooooooooooooooooooooooooooooong.", :overflow => :shrink_to_fit}],
 					["1", "answer"],
 					#["Box4", "Possible checkbox answer 4."]
@@ -39,6 +41,12 @@ Prawn::Document::generate("generatedPracticeStoreReport.pdf") do
 				data, 
 				:row_colors => ['f3f9fd','FFFFFF'], 
 				:width => 550,
+				# Desired Column Widths:
+				# Col 1: 20
+				# Col 2: 150
+				# Col 3: 20
+				# Col 4: 320
+				# Col 5: 40
 				:column_widths => {0 => 25, 2 => 25}
 				#:column_widths => [15, 150, 15, 320, 30]
 			) do
@@ -51,16 +59,7 @@ Prawn::Document::generate("generatedPracticeStoreReport.pdf") do
 			# set the first row colors
 			row(0).background_color = '30abdf'
 
-			# set column widths
-			# first column: 20
 
-			# second column: 150
-
-			# third column: 20
-
-			# fourth column: 320
-
-			# fifth column: 40
 
 
 		end
