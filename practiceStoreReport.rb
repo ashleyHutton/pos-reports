@@ -13,10 +13,10 @@ Prawn::Document::generate("generatedPracticeStoreReport.pdf") do
 		# elements of checkbox questions including answer and box
 		subTable = [ 
 					#["Box1", "Possible checkbox answer 1."],
-					["1", "answer"],
+					[{:content => "1", :width => 25}, {:content => "answer", :overflow => :shrink_to_fit}],
 					#["Box2", "Possible checkbox answer 2."],
 					["1", "answer"],
-					#["Box3", "Possible checkbox answer 3. This answer is really loooooooooooooooooooooooooooooong. What will this look like?"],
+					#["1", {:content => "Possible checkbox answer 3. This answer is really loooooooooooooooooooooooooooooong.", :overflow => :shrink_to_fit}],
 					["1", "answer"],
 					#["Box4", "Possible checkbox answer 4."]
 					]
@@ -29,7 +29,7 @@ Prawn::Document::generate("generatedPracticeStoreReport.pdf") do
 				[{:content => "Question description goes here.", :colspan => 5}],
 				# Questions and answers
 				[{:content => "Q1", :size => @qFont}, "Basic Question", "", {:content => "First Answer", :colspan => 2}],
-				[{:content => "Q2", :size => @qFont}, "Checkbox", {:content => subTable, :colspan => 2}],
+				[{:content => "Q2", :size => @qFont}, "Checkbox", {:content => subTable, :colspan => 3}],
 				#["Q3", "Basic Question", "", {:content => "Second Answer", :colspan => 2}],
 				#["Q4", "Basic Question", "", {:content => "Third Answer", :colspan => 2}]
 				]
@@ -74,8 +74,9 @@ end
 # To Do:
 #
 # [] figure out how to get the check boxes in a "checked" and "unchecked" state
-# [] make heading bigger with bigger text
-# [] make column for Q1, Q2, etc. smaller and adjust other column sizes accordinly
-# [] multiple answers for one question in the same row?
+# [done] make heading bigger with bigger text
+# [done] make column for Q1, Q2, etc. smaller and adjust other column sizes accordinly
+# [done] multiple answers for one question in the same row?
 # [done] description should span 4 columns but it looks like it is only spanning 3
+# [] text wrapping!
 # 
