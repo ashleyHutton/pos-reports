@@ -1,12 +1,14 @@
 require 'prawn'
 require 'prawn/table'
 
-Prawn::Document::generate("Generated\ PDFs/practiceStoreReport.pdf") do 
+Prawn::Document::generate("generatedPracticeStoreReport.pdf") do 
 
 	stroke_axis
 
 	# create outer bounding box
 	bounding_box([0,cursor], :width => 550) do
+
+		@qFont = 10
 
 		# elements of checkbox questions including answer and box
 		subTable = [ 
@@ -22,14 +24,14 @@ Prawn::Document::generate("Generated\ PDFs/practiceStoreReport.pdf") do
 		# elements of the table in the format [[r1c1,r1c2],[r2c1,r2c2],...]
 		data = 	[
 				# Header
-				[{:content => "Header 1", :colspan => 4, :rowspan => 2}, {:content => "Score1", :rowspan => 2}],
+				[{:content => "Header 1", :colspan => 4, :size => 30}, "Score1"],
 				# Description
 				[{:content => "Question description goes here.", :colspan => 5}],
 				# Questions and answers
-				["Q1", "Basic Question", "", {:content => "First Answer", :colspan => 2}],
-				["Q2", "Checkbox", {:content => subTable, :colspan => 2}],
-				["Q3", "Basic Question", "", {:content => "Second Answer", :colspan => 2}],
-				["Q4", "Basic Question", "", {:content => "Third Answer", :colspan => 2}]
+				[{:content => "Q1", :size => @qFont}, "Basic Question", "", {:content => "First Answer", :colspan => 2}],
+				[{:content => "Q2", :size => @qFont}, "Checkbox", {:content => subTable, :colspan => 2}],
+				#["Q3", "Basic Question", "", {:content => "Second Answer", :colspan => 2}],
+				#["Q4", "Basic Question", "", {:content => "Third Answer", :colspan => 2}]
 				]
 
 		# create table with alternating row colors
@@ -37,6 +39,7 @@ Prawn::Document::generate("Generated\ PDFs/practiceStoreReport.pdf") do
 				data, 
 				:row_colors => ['f3f9fd','FFFFFF'], 
 				:width => 550,
+				:column_widths => {0 => 25, 2 => 25}
 				#:column_widths => [15, 150, 15, 320, 30]
 			) do
 
