@@ -20,12 +20,12 @@ When I arrived to the store I saw two sales people, one was serving a customer a
 
 	checkboxAnswer = [	
 						"This is the first option",
-						"This is the second option. It is really loooooooooooooooooooooooooooo\noong. What will happen?",
+						"This is the second option. It is really looooooooooooooooooooooooooooooog",
 						"This is the third option",
 						"This is the fourth option"
 					 ]
 
-	answer = "This is the second option. It is really loooooooooooooooooooooooooooo\noong. What will happen?"
+	#answer = "This is the second option. It is really loooooooooooooooooooooooooooo\noong. What will happen?"
 
 	# create outer bounding box
 	bounding_box([0,cursor], :width => 550) do
@@ -39,10 +39,10 @@ When I arrived to the store I saw two sales people, one was serving a customer a
 					# making checkboxes hardcoded either filled or unfilled for now
 					[{:image => unfilled_box, :fit => [sizeOfBox, sizeOfBox], :width => 25}, {:content => checkboxAnswer[0]}],
 					#["Box2", "Possible checkbox answer 2."],
-					[{:image => filled_box, :fit => [sizeOfBox,sizeOfBox], :width => 25}, {:content => answer, :overflow => :shrink_to_fit}],
+					[{:image => filled_box, :fit => [sizeOfBox,sizeOfBox]}, {:content => checkboxAnswer[1]}],
 					# throwing an error even though we are wrapping text -- why?
 					#["1", {:content => "Possible checkbox answer 3. This answer is really loooooooooooooooooooooooooooooong.", :overflow => :shrink_to_fit}],
-					[{:image => unfilled_box, :fit => [sizeOfBox, sizeOfBox], :width => 25}, {:content => checkboxAnswer[2]}],
+					[{:image => unfilled_box, :fit => [sizeOfBox, sizeOfBox]}, {:content => checkboxAnswer[2]}]
 					#["Box4", "Possible checkbox answer 4."]
 					]
 
@@ -53,8 +53,12 @@ When I arrived to the store I saw two sales people, one was serving a customer a
 				# Description
 				[{:content => "Question description goes here.", :colspan => 5}],
 				# Questions and answers
-				[{:content => "Q1", :size => @qFont}, "Basic Question", "", {:content => "First Answer", :colspan => 2}],
+				[{:content => "Q1", :size => @qFont}, "Basic Question", {:content => "", :width => 25}, {:content => "First Answer", :colspan => 2}],
+				# Checkbox questions
 				[{:content => "Q2", :size => @qFont}, "Checkbox", {:content => subTable, :colspan => 3}],
+				
+				# when I uncomment this it makes the basic question empty column really big
+				# when I comment it, it makes the subtable second column really big
 				[{:content => "Q3", :size => @qFont}, {:content => descriptiveQuestion, :colspan => 4}]
 				#["Q3", "Basic Question", "", {:content => "Second Answer", :colspan => 2}],
 				#["Q4", "Basic Question", "", {:content => "Third Answer", :colspan => 2}]
@@ -64,13 +68,13 @@ When I arrived to the store I saw two sales people, one was serving a customer a
 		table(
 				data, 
 				:row_colors => ['f3f9fd','FFFFFF'], 
-				# :width => 550,
+				:width => 550,
 				# Desired Column Widths:
-				# Col 1: 20
-				# Col 2: 150
-				# Col 3: 20
-				# Col 4: 320
-				# Col 5: 40
+				# Col 1: 25
+				# Col 2: ?
+				# Col 3: 25
+				# Col 4: ?
+				# Col 5: idk
 				:column_widths => {0 => 25, 2 => 25}
 				#:column_widths => [15, 150, 15, 320, 30]
 			) do
@@ -82,9 +86,6 @@ When I arrived to the store I saw two sales people, one was serving a customer a
 			row(0).column(1).align = :right
 			# set the first row colors
 			row(0).background_color = '30abdf'
-
-
-
 
 		end
 
@@ -101,5 +102,5 @@ end
 # [done] make column for Q1, Q2, etc. smaller and adjust other column sizes accordinly
 # [done] multiple answers for one question in the same row?
 # [done] description should span 4 columns but it looks like it is only spanning 3
-# [] text wrapping!
+# [] text wrapping in subtables!
 # 
