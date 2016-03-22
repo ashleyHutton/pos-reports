@@ -1,9 +1,31 @@
 require 'prawn'
 require 'prawn/table'
 
+Prawn::Font::AFM.hide_m17n_warning = true
+
 Prawn::Document::generate("generatedPracticeStoreReport.pdf") do 
 
 	stroke_axis
+
+	unfilled_box = "/Users/ashleyhutton/Documents/Brand New Box/pos-reports/unfilled_box.png"
+	filled_box = "/Users/ashleyhutton/Documents/Brand New Box/pos-reports/filled_box.png"
+
+	sizeOfBox = 12;
+
+    descriptiveQuestion = "Please describe the following:
+	• How the salesperson responded when you stated your interest in a tablet.
+	• What questions they asked to understand your needs.
+	• Please note if the salesperson led the interaction, or if you had to volunteer information to keep the conversation going.\n
+When I arrived to the store I saw two sales people, one was serving a customer and the other was behind the counter. I was not quite sure if they were doing paperwork or if the salesperson thought that I did not need help. Then the salesperson approached me after waiting for some minutes, they asked me what I was looking for. I explained them that I was looking for a tablet and the salesperson indicated me where the tablets were, so I had to ask some questions to keep the conversation going; I told them that I was looking for something light and with Internet access, so salesperson asked me about the usage I would give to the device and asked me if I would search on the Internet, read emails and share information on the social networks. Apart from that that salesperson did not make further questions. I had to lead the whole interaction.\n"
+
+	checkboxAnswer = [	
+						"This is the first option",
+						"This is the second option. It is really loooooooooooooooooooooooooooo\noong. What will happen?",
+						"This is the third option",
+						"This is the fourth option"
+					 ]
+
+	answer = "This is the second option. It is really loooooooooooooooooooooooooooo\noong. What will happen?"
 
 	# create outer bounding box
 	bounding_box([0,cursor], :width => 550) do
@@ -13,13 +35,14 @@ Prawn::Document::generate("generatedPracticeStoreReport.pdf") do
 		# elements of checkbox questions including answer and box
 		subTable = [ 
 					#["Box1", "Possible checkbox answer 1."],
-					# specifying the width here make all columns this width -- why?
-					[{:content => "1", :width => 25}, {:content => "answer", :overflow => :shrink_to_fit}],
+					# specifying the width here make all rows in this column this width -- why?
+					# making checkboxes hardcoded either filled or unfilled for now
+					[{:image => unfilled_box, :fit => [sizeOfBox, sizeOfBox], :width => 25}, {:content => checkboxAnswer[0]}],
 					#["Box2", "Possible checkbox answer 2."],
-					["1", "answer"],
+					[{:image => filled_box, :fit => [sizeOfBox,sizeOfBox], :width => 25}, {:content => answer, :overflow => :shrink_to_fit}],
 					# throwing an error even though we are wrapping text -- why?
 					#["1", {:content => "Possible checkbox answer 3. This answer is really loooooooooooooooooooooooooooooong.", :overflow => :shrink_to_fit}],
-					["1", "answer"],
+					[{:image => unfilled_box, :fit => [sizeOfBox, sizeOfBox], :width => 25}, {:content => checkboxAnswer[2]}],
 					#["Box4", "Possible checkbox answer 4."]
 					]
 
@@ -32,6 +55,7 @@ Prawn::Document::generate("generatedPracticeStoreReport.pdf") do
 				# Questions and answers
 				[{:content => "Q1", :size => @qFont}, "Basic Question", "", {:content => "First Answer", :colspan => 2}],
 				[{:content => "Q2", :size => @qFont}, "Checkbox", {:content => subTable, :colspan => 3}],
+				[{:content => "Q3", :size => @qFont}, {:content => descriptiveQuestion, :colspan => 4}]
 				#["Q3", "Basic Question", "", {:content => "Second Answer", :colspan => 2}],
 				#["Q4", "Basic Question", "", {:content => "Third Answer", :colspan => 2}]
 				]
@@ -40,7 +64,7 @@ Prawn::Document::generate("generatedPracticeStoreReport.pdf") do
 		table(
 				data, 
 				:row_colors => ['f3f9fd','FFFFFF'], 
-				:width => 550,
+				# :width => 550,
 				# Desired Column Widths:
 				# Col 1: 20
 				# Col 2: 150
@@ -72,7 +96,7 @@ end
 
 # To Do:
 #
-# [] figure out how to get the check boxes in a "checked" and "unchecked" state
+# [done] figure out how to get the check boxes in a "checked" and "unchecked" state
 # [done] make heading bigger with bigger text
 # [done] make column for Q1, Q2, etc. smaller and adjust other column sizes accordinly
 # [done] multiple answers for one question in the same row?
